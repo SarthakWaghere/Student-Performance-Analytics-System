@@ -1,0 +1,95 @@
+{% extends 'analytics/base.html' %}
+
+{% block title %}Upload Data - Student Analytics{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-cloud-upload me-2"></i>Upload Student Dataset</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label for="dataset" class="form-label fs-5">Select Dataset File</label>
+                            <input type="file" class="form-control form-control-lg" id="dataset" name="dataset" accept=".csv,.xlsx" required>
+                            <div class="form-text">Supported formats: CSV (.csv), Excel (.xlsx)</div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <h6><i class="bi bi-info-circle me-2"></i>Expected Dataset Columns:</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mb-0">
+                                        <li>Student Demographics (Gender, Age)</li>
+                                        <li>Academic Data (CGPA, SGPA, Semester)</li>
+                                        <li>Attendance Percentage</li>
+                                        <li>Study Hours & Sessions</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mb-0">
+                                        <li>Social Media Usage</li>
+                                        <li>Family Income</li>
+                                        <li>Skills & Interests</li>
+                                        <li>Co-curricular Activities</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-cloud-upload me-2"></i>Upload & Process Dataset
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Data Processing Pipeline</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <div class="p-3">
+                                <i class="bi bi-file-earmark-arrow-up display-4 text-primary mb-2"></i>
+                                <h6>1. Data Import</h6>
+                                <p class="small text-muted">Load CSV/Excel files with validation</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="p-3">
+                                <i class="bi bi-funnel display-4 text-success mb-2"></i>
+                                <h6>2. Data Cleaning</h6>
+                                <p class="small text-muted">Handle missing values & outliers</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="p-3">
+                                <i class="bi bi-arrow-repeat display-4 text-warning mb-2"></i>
+                                <h6>3. Transformation</h6>
+                                <p class="small text-muted">Normalize & encode features</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="p-3">
+                                <i class="bi bi-database display-4 text-info mb-2"></i>
+                                <h6>4. Store in DW</h6>
+                                <p class="small text-muted">Save to data warehouse</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

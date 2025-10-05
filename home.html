@@ -1,0 +1,147 @@
+{% extends 'analytics/base.html' %}
+
+{% block title %}Home - Student Performance Analytics{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Student Performance Prediction & Analytics System</h1>
+                <p class="lead mb-4">Advanced Data Mining and Warehouse concepts applied to educational analytics using machine learning and interactive dashboards.</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'analytics:dashboard' %}" class="btn btn-light btn-lg">
+                        <i class="bi bi-bar-chart me-2"></i>View Dashboard
+                    </a>
+                    <a href="{% url 'analytics:upload_data' %}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-upload me-2"></i>Upload Data
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="bi bi-graph-up display-1"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container section">
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card stats-card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-people-fill text-primary display-4 mb-3"></i>
+                    <h3 class="text-primary">{{ total_students }}</h3>
+                    <p class="card-text">Total Students Analyzed</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stats-card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-cpu text-success display-4 mb-3"></i>
+                    <h3 class="text-success">{{ classification_accuracy }}%</h3>
+                    <p class="card-text">Classification Accuracy</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stats-card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-award text-warning display-4 mb-3"></i>
+                    <h3 class="text-warning">{{ avg_cgpa }}</h3>
+                    <p class="card-text">Average CGPA</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stats-card text-center h-100">
+                <div class="card-body">
+                    <i class="bi bi-brain text-info display-4 mb-3"></i>
+                    <h3 class="text-info">{{ total_predictions }}</h3>
+                    <p class="card-text">Predictions Made</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="mb-4">DMW Concepts Implemented</h2>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-3"></i>
+                            <span>Data Preprocessing</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-3"></i>
+                            <span>Classification (Decision Tree)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-3"></i>
+                            <span>Clustering (K-means)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-3"></i>
+                            <span>Association Rule Mining</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-3"></i>
+                            <span>Data Warehouse Design</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-3"></i>
+                            <span>OLAP Operations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Performance Distribution Chart
+const ctx = document.getElementById('performanceChart').getContext('2d');
+new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Distinction', 'First Class', 'Second Class', 'Pass'],
+        datasets: [{
+            data: [{{ performance_distribution.Distinction }}, {{ performance_distribution.First_Class }}, {{ performance_distribution.Second_Class }}, {{ performance_distribution.Pass }}],
+            backgroundColor: ['#28a745', '#17a2b8', '#ffc107', '#dc3545'],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Student Performance Distribution'
+            }
+        }
+    }
+});
+</script>
+{% endblock %}
